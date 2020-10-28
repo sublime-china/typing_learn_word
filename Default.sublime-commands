@@ -1,0 +1,7 @@
+[
+    { "command": "tlw_add_word", "caption": "TypingLearnWord: Add Word" },
+    { "command": "tlw_remove_word", "caption": "TypingLearnWord: Remove Word" },
+    // { "command": "tlw_create_book", "caption": "TypingLearnWord: Create Book" },
+    // { "command": "tlw_remove_book", "caption": "TypingLearnWord: Remove Book" },
+    { "command": "tlw_typing_word", "caption": "TypingLearnWord: Typing Word" },
+]
