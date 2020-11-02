@@ -48,6 +48,10 @@ class Book(BaseDataStruct):
         self._storage[self.name].remove(word)
         self.save_storage()
 
+    def remove_all_words(self):
+        self._storage[self.name] = []
+        self.save_storage()
+
     def get_words(self):
         return self._storage[self.name]
 

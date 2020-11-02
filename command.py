@@ -31,6 +31,12 @@ class TlwRemoveWord(sublime_plugin.TextCommand):
         window.show_quick_panel(words, on_select)
 
 
+class TlwRemoveAllWord(sublime_plugin.TextCommand):
+    def run(self, edit):
+        book = Book("unpack")
+        book.remove_all_words()
+
+
 class TlwCreateBook(sublime_plugin.TextCommand):
     def run(self, edit):
         print("tlw_create_book")
