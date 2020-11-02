@@ -62,34 +62,36 @@ class TlwTypingWord(sublime_plugin.TextCommand):
         window.show_quick_panel(book_list, on_select)
 
     def typing_book(self, book_name):
-        words = self.book_manager.get_word_by_book_name(book_name)
-
         window = sublime.active_window()
         view = window.new_file()
         view.set_name("Typing Learn Word")
         view.set_scratch(True)
-        self.view = view
 
+        words = self.book_manager.get_word_by_book_name(book_name)
         settings = view.settings()
         settings.set("isTypingLearnWord", True)
         settings.set("words", words)
+        settings.set("examination", words)
 
 
 class TlwNewWord(sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         settings = view.settings()
-        words = settings.get("words")
-        if len(words) == 0:
-            sublime.message_dialog("Win")
-            view.close()
+        examination = settings.get("examination")
+        if len(examination) == 0:
+            if sublime.ok_cancel_dialog('Try Again?'):
+                settings.set("examination", settings.get("words"))
+                view.run_command("tlw_new_word")
+            else:
+                view.close()
             return
-        word = words.pop()
-        settings.set("words", words)
+        word = examination.pop()
+        settings.set("examination", examination)
         if view.size() == 0:
-            self.view.insert(edit, 0, word + "\n")
+            view.insert(edit, 0, word + "\n")
         else:
-            self.view.replace(edit, sublime.Region(0, view.size()), word + "\n")
+            view.replace(edit, sublime.Region(0, view.size()), word + "\n")
 
 
 class TlwViewEventListener(sublime_plugin.EventListener):
