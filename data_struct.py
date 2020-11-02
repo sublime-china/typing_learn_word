@@ -19,13 +19,11 @@ class BaseDataStruct(object):
             self._storage = json.loads(content) or {}
         except Exception:
             sublime.error_message("Cann't read local storage data.")
-        # print("read self._storage: ", self._storage)
 
     def save_storage(self):
         path = get_file_path_cache(STORAGE_CACHE_NAME)
         try:
             fp = open(path, "w+")
-            # print("save content:", json.dumps(self._storage))
             fp.write(json.dumps(self._storage))
             fp.close()
         except Exception:

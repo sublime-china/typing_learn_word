@@ -7,19 +7,18 @@ from .data_struct import Book, BooksManager
 class TlwAddWord(sublime_plugin.TextCommand):
     def run(self, edit):
         book = Book("unpack")
-        window = sublime.active_window()
-        caption = "Add Word:"
 
         def on_done(words):
             for word in words.split("\n"):
                 book.add_word(word)
 
+        caption = "Add Word:"
+        window = sublime.active_window()
         window.show_input_panel(caption, "", on_done, None, None)
 
 
 class TlwRemoveWord(sublime_plugin.TextCommand):
     def run(self, edit):
-        window = sublime.active_window()
         book = Book("unpack")
         words = book.get_words()
 
@@ -28,6 +27,7 @@ class TlwRemoveWord(sublime_plugin.TextCommand):
                 return
             book.remove_word(words[index])
 
+        window = sublime.active_window()
         window.show_quick_panel(words, on_select)
 
 
@@ -49,12 +49,8 @@ class TlwRemoveBook(sublime_plugin.TextCommand):
 
 class TlwTypingWord(sublime_plugin.TextCommand):
     def run(self, edit):
-        window = sublime.active_window()
-
-        self.edit = edit
         self.book_manager = BooksManager()
         book_list = self.book_manager.get_book_list()
-
         if len(book_list) == 0:
             return
         if len(book_list) == 1:
@@ -65,6 +61,7 @@ class TlwTypingWord(sublime_plugin.TextCommand):
                 return
             self.typing_book(book_list[index])
 
+        window = sublime.active_window()
         window.show_quick_panel(book_list, on_select)
 
     def typing_book(self, book_name):
@@ -86,7 +83,7 @@ class TlwNewWord(sublime_plugin.TextCommand):
         settings = view.settings()
         examination = settings.get("examination")
         if len(examination) == 0:
-            if sublime.ok_cancel_dialog('Try Again?'):
+            if sublime.ok_cancel_dialog("Try Again?"):
                 settings.set("examination", settings.get("words"))
                 view.run_command("tlw_new_word")
             else:
