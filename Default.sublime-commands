@@ -5,4 +5,5 @@
     // { "command": "tlw_create_book", "caption": "TypingLearnWord: Create Book" },
     // { "command": "tlw_remove_book", "caption": "TypingLearnWord: Remove Book" },
     { "command": "tlw_typing_word", "caption": "TypingLearnWord: Typing Word" },
+    { "command": "tlw_parse_word", "caption": "TypingLearnWord: Parse Word" },
 ]

@@ -2,6 +2,7 @@ import sublime
 import sublime_plugin
 
 from .data_struct import Book, BooksManager
+from .parse_word import parse_word
 
 
 class TlwAddWord(sublime_plugin.TextCommand):
@@ -114,3 +115,16 @@ class TlwViewEventListener(sublime_plugin.EventListener):
 
     def on_new(self, view):
         sublime.set_timeout(lambda: view.run_command("tlw_new_word"), 10)
+
+
+class TlwParseWord(sublime_plugin.TextCommand):
+    def run(self, edit):
+        view = self.view
+        contents = view.substr(sublime.Region(0, view.size()))
+        result = parse_word(contents)
+
+        window = sublime.active_window()
+        view = window.new_file()
+        view.set_name("Parse Word")
+        view.set_scratch(True)
+        view.insert(edit, 0, result + "\n")
