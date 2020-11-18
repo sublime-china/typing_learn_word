@@ -81,7 +81,9 @@ class TlwNewWord(sublime_plugin.TextCommand):
     def run(self, edit):
         view = self.view
         settings = view.settings()
-        examination = settings.get("examination", [])
+        examination = settings.get("examination", None)
+        if examination is None:
+            return
         if len(examination) == 0:
             if sublime.ok_cancel_dialog("Try Again?"):
                 settings.set("examination", settings.get("words", []))
